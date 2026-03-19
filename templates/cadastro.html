@@ -75,6 +75,20 @@
         .presenca-group {
             margin-bottom: 10px;
         }
+
+        /* 🔥 NOVO - CARD FOTO */
+        .foto-card {
+            background-color: #000;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .foto-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -97,6 +111,7 @@
 
     <h4 class="text-center mb-4">Cadastro de Colaborador</h4>
 
+    <!-- 🔥 FORM PRINCIPAL MANTIDO -->
     <form method="POST">
 
         <label>Nome</label>
@@ -150,6 +165,27 @@
             + Adicionar dia
         </button>
 
+        <!-- 🔥 NOVA ÁREA DE FOTO -->
+        <hr>
+        <h5>Foto do Colaborador</h5>
+
+        <input type="file" id="fotoInput" accept="image/*" class="form-control">
+
+        <!-- PREVIEW -->
+        <div id="preview-container" class="mt-3" style="display:none;">
+            <div class="foto-card">
+                <img id="preview-img" src="">
+                
+                <!-- FORM DE UPLOAD -->
+                <form id="formFoto" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="foto" id="hiddenFoto" style="display:none;">
+                    <button type="submit" class="btn btn-primary mt-2">
+                        Salvar Foto
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <!-- BOTÕES -->
         <div class="d-flex gap-2 mt-4">
             <button type="submit" class="btn btn-primary w-50">Salvar</button>
@@ -172,6 +208,26 @@
 
         container.appendChild(div);
     }
+
+    // 🔥 PREVIEW + INTEGRAÇÃO
+    document.getElementById('fotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById('preview-img').src = e.target.result;
+                document.getElementById('preview-container').style.display = 'block';
+
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                document.getElementById('hiddenFoto').files = dt.files;
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
 
 </body>
