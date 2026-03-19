@@ -2,6 +2,11 @@ from flask import render_template, request, redirect, url_for, session, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from models import db, Usuario, Evento, Colaborador, Presenca
 from werkzeug.security import check_password_hash
+
+# 🔥 NOVOS IMPORTS (APENAS ADIÇÃO)
+from werkzeug.utils import secure_filename
+import os
+
 from datetime import datetime
 
 def init_routes(app):
@@ -120,6 +125,42 @@ def init_routes(app):
             return redirect(url_for('menu'))
 
         return render_template('cadastro.html')
+
+
+    # ==============================
+    # 🔥 NOVA ROTA DE UPLOAD (ADICIONADA)
+    # ==============================
+    @app.route('/upload_foto/<int:colaborador_id>', methods=['POST'])
+    @login_required
+    def upload_foto(colaborador_id):
+
+        colaborador = Colaborador.query.get_or_404(colaborador_id)
+
+        if 'foto' not in request.files:
+            flash('Nenhuma foto enviada')
+            return redirect(url_for('listar_colaboradores'))
+
+        file = request.files['foto']
+
+        if file.filename == '':
+            flash('Nenhuma foto selecionada')
+            return redirect(url_for('listar_colaboradores'))
+
+        filename = secure_filename(file.filename)
+
+        nome_arquivo = f"colaborador_{colaborador.id}_{filename}"
+
+        pasta = os.path.join('static', 'uploads')
+        os.makedirs(pasta, exist_ok=True)
+
+        caminho = os.path.join(pasta, nome_arquivo)
+        file.save(caminho)
+
+        colaborador.foto = nome_arquivo
+        db.session.commit()
+
+        flash('Foto salva com sucesso!')
+        return redirect(url_for('listar_colaboradores'))
 
 
     # ==============================
