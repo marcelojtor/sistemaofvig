@@ -34,52 +34,51 @@ def load_user(user_id):
 # CRIAÇÃO AUTOMÁTICA DO BANCO
 # ==============================
 def criar_dados_iniciais():
-    with app.app_context():
-        db.create_all()
+    db.create_all()
 
-        # ==============================
-        # USUÁRIOS PADRÃO
-        # ==============================
-        if not Usuario.query.first():
-            usuarios = [
-                Usuario(
-                    username='diretor',
-                    password=generate_password_hash('123456'),
-                    role='diretor'
-                ),
-                Usuario(
-                    username='supervisor',
-                    password=generate_password_hash('123456'),
-                    role='supervisor'
-                ),
-                Usuario(
-                    username='dev',
-                    password=generate_password_hash('123456'),
-                    role='desenvolvedor'
-                )
-            ]
+    # ==============================
+    # USUÁRIOS PADRÃO
+    # ==============================
+    if not Usuario.query.first():
+        usuarios = [
+            Usuario(
+                username='diretor',
+                password=generate_password_hash('123456'),
+                role='diretor'
+            ),
+            Usuario(
+                username='supervisor',
+                password=generate_password_hash('123456'),
+                role='supervisor'
+            ),
+            Usuario(
+                username='dev',
+                password=generate_password_hash('123456'),
+                role='desenvolvedor'
+            )
+        ]
 
-            for u in usuarios:
-                db.session.add(u)
+        for u in usuarios:
+            db.session.add(u)
 
-            print("✔ Usuários padrão criados")
+        print("✔ Usuários padrão criados")
 
-        # ==============================
-        # EVENTOS / CONTRATOS PADRÃO
-        # ==============================
-        if not Evento.query.first():
-            eventos = [
-                Evento(nome='Supermercado ABC', tipo='contrato'),
-                Evento(nome='Prefeitura de Queimados', tipo='contrato'),
-                Evento(nome='Evento Show Rock', tipo='evento')
-            ]
+    # ==============================
+    # EVENTOS / CONTRATOS PADRÃO
+    # ==============================
+    if not Evento.query.first():
+        eventos = [
+            Evento(nome='Supermercado ABC', tipo='contrato'),
+            Evento(nome='Prefeitura de Queimados', tipo='contrato'),
+            Evento(nome='Evento Show Rock', tipo='evento')
+        ]
 
-            for e in eventos:
-                db.session.add(e)
+        for e in eventos:
+            db.session.add(e)
 
-            print("✔ Eventos padrão criados")
+        print("✔ Eventos padrão criados")
 
-        db.session.commit()
+    db.session.commit()
 
 
 # ==============================
@@ -87,12 +86,14 @@ def criar_dados_iniciais():
 # ==============================
 init_routes(app)
 
+# 🔥 CORREÇÃO CRÍTICA (EXECUTA NO RENDER)
+with app.app_context():
+    criar_dados_iniciais()
+
 
 # ==============================
 # EXECUÇÃO DO APP
 # ==============================
 if __name__ == '__main__':
-    criar_dados_iniciais()
-
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
