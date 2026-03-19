@@ -1,0 +1,148 @@
+/* ==============================
+   RESET BÁSICO
+============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==============================
+   BODY
+============================== */
+body {
+    background-color: #000;
+    color: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ==============================
+   HEADER GLOBAL
+============================== */
+header {
+    background-color: #000;
+    border-bottom: 1px solid #222;
+}
+
+header h5 {
+    margin: 0;
+}
+
+/* ==============================
+   LOGO
+============================== */
+.logo {
+    max-height: 50px;
+}
+
+/* ==============================
+   INPUTS E SELECTS
+============================== */
+input,
+select,
+textarea {
+    background-color: #000 !important;
+    color: #FFF !important;
+    border: 1px solid #444 !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #0d3b66 !important;
+    box-shadow: none !important;
+}
+
+/* ==============================
+   BOTÕES
+============================== */
+.btn-primary {
+    background-color: #0d3b66;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #145ea8;
+}
+
+.btn-secondary {
+    background-color: #333;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #555;
+}
+
+.btn-danger {
+    background-color: #8b0000;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #b30000;
+}
+
+/* ==============================
+   CARDS
+============================== */
+.card-box,
+.card-btn {
+    background-color: #111;
+    border: 1px solid #222;
+    border-radius: 10px;
+}
+
+/* ==============================
+   TABELAS
+============================== */
+table {
+    background-color: #111 !important;
+}
+
+th {
+    background-color: #0d3b66 !important;
+}
+
+td, th {
+    color: #FFF !important;
+}
+
+/* ==============================
+   ALERTAS
+============================== */
+.alert {
+    border-radius: 5px;
+}
+
+/* ==============================
+   LINKS
+============================== */
+a {
+    color: #FFF;
+}
+
+a:hover {
+    color: #0d3b66;
+    text-decoration: none;
+}
+
+/* ==============================
+   HOVER INTERAÇÕES
+============================== */
+.card-btn:hover {
+    transform: scale(1.03);
+    transition: 0.3s;
+    border-color: #0d3b66;
+}
+
+/* ==============================
+   RESPONSIVO
+============================== */
+@media (max-width: 768px) {
+    .container-main,
+    .container-form,
+    .container-table {
+        padding: 15px;
+    }
+}
